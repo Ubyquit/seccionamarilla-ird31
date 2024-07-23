@@ -43,3 +43,61 @@ CREATE TABLE municipios(
     id_estado INT,
     FOREIGN KEY (id_estado) REFERENCES estados(id_estado)
 );
+
+CREATE TABLE ubicaciones(
+    id_ubicacion INT PRIMARY KEY AUTO_INCREMENT,
+    id_estado INT,
+    id_municipio INT,
+    ciudad VARCHAR(100),
+    cp VARCHAR(5),
+    sm VARCHAR(10),
+    mzn VARCHAR(10),
+    lote VARCHAR(10),
+    numero_ext VARCHAR(10),
+    numero_int VARCHAR(10),
+    calle VARCHAR(100),
+    referencia VARCHAR(500),
+    map VARCHAR(500),
+    FOREIGN KEY(id_estado) REFERENCES estados(id_estado),
+    FOREIGN KEY(id_municipio) REFERENCES municipios(id_municipio)
+);
+
+CREATE TABLE redes_sociales(
+    id_red_social INT PRIMARY KEY AUTO_INCREMENT,
+    facebook VARCHAR(500),
+    instagram VARCHAR(500),
+    twitter VARCHAR(500),
+    youtube VARCHAR(500),
+    linkedin VARCHAR(500)
+);
+
+CREATE TABLE giros(
+    id_giro INT PRIMARY KEY AUTO_INCREMENT,
+    giro VARCHAR(50)
+);
+
+CREATE TABLE empresas(
+    id_empresa INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100),
+    id_giro INT,
+    descripcion VARCHAR(500),
+    correo VARCHAR(100),
+    contrasena VARCHAR(100),
+    telefono VARCHAR(10),
+    whatsappn VARCHAR(10),
+    web VARCHAR(100),
+    id_ubicacion INT,
+    id_red_social INT,
+    FOREIGN KEY(id_giro) REFERENCES giros(id_giro),
+    FOREIGN KEY(id_ubicacion) REFERENCES ubicaciones(id_ubicacion),
+    FOREIGN KEY(id_red_social) REFERENCES redes_sociales(id_red_social)
+    );
+
+CREATE TABLE horarios(
+    id_horario INT PRIMARY KEY AUTO_INCREMENT,
+    id_empresa INT,
+    dia VARCHAR(10),
+    apertura TIME,
+    cierre TIME,
+    FOREIGN KEY(id_empresa) REFERENCES empresas(id_empresa)
+);
